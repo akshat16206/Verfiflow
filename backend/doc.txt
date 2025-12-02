@@ -32,5 +32,10 @@ veriflow-backend/
 
 index.js - final end point for routes
 
+clone the github repo - https://github.com/akshat16206/Verfiflow
 
-installed
+run - 
+```
+npm install
+```
+
