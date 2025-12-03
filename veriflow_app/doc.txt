@@ -1,9 +1,19 @@
 step 1:
 
-run
 
+
+run - in verfiflow_app 
 ```
 npm install
+```
+created user model and wrote api endpoints for login signup with authorization and password hashing
+
+
+run - 
+
+```
+npx expo install @react-native-async-storage/async-storage
+npm install axios
 `
 
 
@@ -14,14 +24,10 @@ screen/
 |-LoginScreen.jsx  //this is login screen 
 |-RegisterScreen.jsx //this is RegisterScreen
 |-authScreen,jsx //for the primary dashboard of role selection
-```
 services/
 |-authService //this is for connecting frontend with backend
 
 ```
-
-npm install axios
-npx expo install @react-native-async-storage/async-storage//  //run these in frontend 
-
-```
 imported AppNavigator in app/index.jsx instead of deleting the app folder
+
+
