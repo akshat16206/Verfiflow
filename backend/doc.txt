@@ -34,3 +34,12 @@ index.js - final end point for routes
 
 clone the github repo - https://github.com/akshat16206/Verfiflow
 
+to run backend - 
+download mongodb community Server
+```
+brew install mongodb-atlas`
+
+```
+atlas setup
+`
+
