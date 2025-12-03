@@ -13,7 +13,7 @@ structure:
 screen/
 |-LoginScreen.jsx  //this is login screen 
 |-RegisterScreen.jsx //this is RegisterScreen
-
+|-authScreen,jsx //for the primary dashboard of role selection
 ```
 services/
 |-authService //this is for connecting frontend with backend

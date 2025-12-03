@@ -4,7 +4,7 @@
     "slug": "veriflow_app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+     "icon": "./assets/veriflow-logo.png",
     "scheme": "veriflowapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

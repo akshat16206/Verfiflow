@@ -11,7 +11,7 @@ exports.register = async (req, res) => {
   // debug: log incoming payload for easier tracing while developing
   console.log('POST /api/auth/register body =>', req.body);
   try {
-    const { name, email, password, phone } = req.body;
+    const { name, email, password, phone, role } = req.body;
     if (!email || !password) return res.status(400).json({ message: 'email and password required' });
 
     const existing = await User.findOne({ email });
@@ -20,7 +20,7 @@ exports.register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const user = new User({ name, email, password: hashedPassword, phone });
+    const user = new User({ name, email, password: hashedPassword, phone, role: role || 'farmer' });
     await user.save();
 
     const token = signToken(user);
