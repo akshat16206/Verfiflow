@@ -7,6 +7,7 @@ require('dotenv').config();
 
 //importing routes
 const authRoutes = require('./routes/authRoutes');
+const projectRoutes = require('./routes/projectRoutes');
 // const userRoutes=require('./routes/userRoutes');
 // const postRoutes=require('./routes/postRoutes');
 //middleware
@@ -15,6 +16,7 @@ app.use(express.json());
 
 //routes middleware
 app.use('/api/auth', authRoutes);
+app.use('/api/projects', projectRoutes);
 // app.use('/api/users',userRoutes);
 // app.use('/api/posts',postRoutes);
 // app.use('/api/users',userRoutes);

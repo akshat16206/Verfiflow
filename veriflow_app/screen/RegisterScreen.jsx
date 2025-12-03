@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import authService from '../services/authService';
+import { Picker } from '@react-native-picker/picker';
 
 const RegisterScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('farmer');   // ⭐ DEFAULT ROLE
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [serverMessage, setServerMessage] = useState(null);
@@ -22,30 +24,30 @@ const RegisterScreen = ({ navigation }) => {
 
     setLoading(true);
     try {
-      const payload = { name, email, password, phone };
+      const payload = { name, email, password, phone, role };  // ⭐ INCLUDE ROLE
       const resp = await authService.register(payload);
 
-      // resp expected shape: { user, token }
       const { token, user } = resp;
       setServerMessage('Registration successful');
+
       if (!token) throw new Error('No token returned from server');
 
-      // Save token and consider the user logged in
       await AsyncStorage.setItem('token', token);
+      await AsyncStorage.setItem('role', role); // ⭐ SAVE ROLE LOCALLY
 
       Alert.alert('Registered', `Welcome ${user?.name ?? user?.email ?? ''}`);
 
-      // Navigate back to Login or to a protected screen (here we go back to Login)
       navigation.navigate('Login');
       return user;
+
     } catch (err) {
-      // show server messages in UI as well
       const respMsg = err?.response?.data?.message;
       if (respMsg) setServerMessage(respMsg);
-      console.error('Register error', err?.response?.data ?? err.message ?? err);
-      const msg = err?.response?.data?.message ?? err.message ?? 'Registration failed';
+
+      const msg = respMsg ?? err.message ?? 'Registration failed';
       setError(msg);
       Alert.alert('Registration failed', msg);
+
     } finally {
       setLoading(false);
     }
@@ -88,6 +90,16 @@ const RegisterScreen = ({ navigation }) => {
         secureTextEntry
       />
 
+      {/* ⭐ ROLE DROPDOWN HERE */}
+      <Picker
+        selectedValue={role}
+        onValueChange={(itemValue) => setRole(itemValue)}
+        style={styles.picker}
+      >
+        <Picker.Item label="Field Operator" value="farmer" />
+        <Picker.Item label="MarketPlace User" value="marketplaceUser" />
+      </Picker>
+
       {serverMessage ? <Text style={styles.serverMessage}>{serverMessage}</Text> : null}
 
       <TouchableOpacity
@@ -127,6 +139,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e2e8f0',
     fontSize: 15,
+  },
+  picker: {
+    backgroundColor: '#fff',
+    borderRadius: 7,
+    marginBottom: 14,
   },
   button: {
     backgroundColor: '#0f172a',
